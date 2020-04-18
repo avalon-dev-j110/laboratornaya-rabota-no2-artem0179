@@ -1,5 +1,6 @@
 package ru.avalon.java.dev.j10.labs;
 
+import java.util.Random;
 import ru.avalon.java.dev.j10.labs.shapes.Circle;
 import ru.avalon.java.dev.j10.labs.shapes.Rectangle;
 import ru.avalon.java.dev.j10.labs.shapes.Shape;
@@ -8,45 +9,51 @@ import ru.avalon.java.dev.j10.labs.shapes.XYPoint;
 
 public class Application {
 
+    static Random random = new Random();
+
     public static void main(String[] args) {
 
-        Shape[] shapes = new Shape[3];
+        Shape[] shapes = new Shape[10];
 
-        shapes[0] = new Triangle(new XYPoint(10, 8), new XYPoint(15, 20), new XYPoint(8, 7));
-        shapes[1] = new Circle(new XYPoint(5, 2), 15);
-        shapes[2] = new Rectangle (new XYPoint(3, 5), new XYPoint(10, 2));
-        
-        
-        
-        System.out.println(shapes[0].getArea());
-        System.out.println(shapes[1].getArea());
+        for (int i = 0; i < shapes.length; i++) {
+            int x = random.nextInt(3);
 
-        
-        System.out.println(findMaxShape(shapes));
-        
-        
+            if (x == 0) {
+                shapes[i] = new Triangle(getRandomPoint(), getRandomPoint(), getRandomPoint());
+            } else if (x == 1) {
+                shapes[i] = new Circle(getRandomPoint(), random.nextInt(60) + 1);
+            } else {
+                shapes[i] = new Rectangle(getRandomPoint(), getRandomPoint());
+            }
+        }
+
+        System.out.println("Максимальная площадь у фигуры в ячейке " + findMaxShape(shapes));
+
+    }
+
+    public static float getRandomFloat() {
+        return random.nextFloat() * 100;
+    }
+
+    public static XYPoint getRandomPoint() {
+        return new XYPoint(getRandomFloat(), getRandomFloat());
     }
 
     public static int findMaxShape(Shape[] shapes) {
         float max = shapes[0].getArea();
         int result = 0;
-            System.out.println("У элемента " + 0 + " площадь " + shapes[0].getArea());
+
         for (int i = 1; i < shapes.length; i++) {
             if (max < shapes[i].getArea()) {
                 max = shapes[i].getArea();
                 result = i;
             }
-            System.out.println("У элемента " + i + " площадь " + shapes[i].getArea());
         }
+
         return result;
     }
 
-
-    
-    
-    
-    
- /*
+    /*
          * TODO: Выполнить действия над массивом 'shapes'
          *
          * 1. Проинициализировать переменную 'shapes' массивом
