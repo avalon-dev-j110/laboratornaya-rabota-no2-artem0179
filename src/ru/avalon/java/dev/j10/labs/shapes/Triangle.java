@@ -15,16 +15,21 @@ package ru.avalon.java.dev.j10.labs.shapes;
  */
 public class Triangle implements Polygon {
 
+    public static float getSideLength(XYPoint x, XYPoint y) {
+        return (float) (Math.sqrt((Math.pow((y.getX() - x.getX()), 2)) + (Math.pow((y.getY() - x.getY()), 2))));
+    }
+
+  
     private XYPoint a, b, c;
 
     public Triangle(XYPoint a, XYPoint b, XYPoint c) {
         if (a.getX() == b.getX() && b.getX() == c.getX()) {
-            System.out.println("Это не треугольник. Точки лежат по оси абсцисс на одной прямой");
+            throw new IllegalArgumentException("Неверные координаты. Точки на одной прямой");
         }
         if (a.getY() == b.getY() && b.getY() == c.getY()) {
-            System.out.println("Это не треугольник. Точки по оси ординат лежат на одной прямой");
+            throw new IllegalArgumentException("Неверные координаты. Точки на одной прямой");
         }
-       
+
         this.a = a;
         this.b = b;
         this.c = c;
@@ -32,18 +37,19 @@ public class Triangle implements Polygon {
 
     @Override
     public float getPerimeter() {
-        return (float) (Math.sqrt(Math.pow((b.getX() - a.getX()), 2)) + (Math.pow((b.getY() - a.getY()), 2))
-                + Math.sqrt(Math.pow((c.getX() - a.getX()), 2)) + (Math.pow((c.getY() - a.getY()), 2))
-                + Math.sqrt(Math.pow((c.getX() - b.getX()), 2)) + (Math.pow((c.getY() - b.getY()), 2)));
+        return getSideLength(a, b) + getSideLength(b, c) + getSideLength(c, a);
+
     }
 
     
     
     @Override
     public float getArea() {
-        return (float) 1 / 2 * (Math.abs(
-                (b.getX() - a.getX()) * (c.getY() - a.getY())
-                - (c.getX() - a.getX()) * (b.getY() - a.getY())));
+        float p = getPerimeter()/2;
+        return (float) Math.sqrt(p * (p - getSideLength(a, b)) * 
+                (p - getSideLength(b, c)) *
+                (p - getSideLength(c, a)));
+                
     }
 
     /*

@@ -27,7 +27,9 @@ public class Application {
             }
         }
 
-        System.out.println("Максимальная площадь у фигуры в ячейке " + findMaxShape(shapes));
+ 
+        
+       System.out.println(findMaxShapeIndex(shapes));
 
     }
 
@@ -39,7 +41,7 @@ public class Application {
         return new XYPoint(getRandomFloat(), getRandomFloat());
     }
 
-    public static int findMaxShape(Shape[] shapes) {
+    public static int findMaxShapeIndex(Shape[] shapes) {
         float max = shapes[0].getArea();
         int result = 0;
 

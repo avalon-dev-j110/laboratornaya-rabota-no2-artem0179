@@ -1,5 +1,7 @@
 package ru.avalon.java.dev.j10.labs.shapes;
 
+import static ru.avalon.java.dev.j10.labs.shapes.Triangle.getSideLength;
+
 /**
  * Представление о прямоугольнике.
  * <p>
@@ -15,7 +17,7 @@ public class Rectangle implements Polygon {
 
     public Rectangle(XYPoint a, XYPoint b) {
         if (a.getX() == b.getX() || a.getY() == b.getY()) {
-            System.out.println("Это не прямоугольниик. Введите точки не на одной прямой");
+            throw new IllegalArgumentException("Неверные координаты. Точки на одной прямой");
 
         }
         this.a = a;
@@ -27,18 +29,17 @@ public class Rectangle implements Polygon {
 
     @Override
     public float getPerimeter() {
-        return (float) (2 * (Math.sqrt((((Math.pow((Math.abs((c.getX()))) - (Math.abs((a.getX()))), 2)) + (Math.pow((Math.abs((c.getY()))) - (Math.abs((a.getY()))), 2))))) +
-                Math.sqrt((((Math.pow((Math.abs((d.getX()))) - (Math.abs((a.getX()))), 2)) + (Math.pow((Math.abs((d.getY()))) - (Math.abs((a.getY()))), 2)))))));
+        return 2 * (getSideLength(a, c) + getSideLength(c, b));
+
     }
 
     @Override
     public float getArea() {
-
-        return (float) Math.sqrt((((Math.pow((Math.abs((c.getX()))) - (Math.abs((a.getX()))), 2)) + (Math.pow((Math.abs((c.getY()))) - (Math.abs((a.getY()))), 2)))
-                * ((Math.pow((Math.abs((d.getX()))) - (Math.abs((a.getX()))), 2)) + (Math.pow((Math.abs((d.getY()))) - (Math.abs((a.getY()))), 2)))));
+        return getSideLength(a, c) * getSideLength(c, b);
 
     }
 
+    
     /*
     /*
      * TODO: Реализовать класс 'Rectangle'
