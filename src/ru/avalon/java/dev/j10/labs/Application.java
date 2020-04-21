@@ -9,6 +9,7 @@ import ru.avalon.java.dev.j10.labs.shapes.XYPoint;
 
 public class Application {
 
+    
     static Random random = new Random();
 
     public static void main(String[] args) {
@@ -27,9 +28,7 @@ public class Application {
             }
         }
 
- 
-        
-       System.out.println(findMaxShapeIndex(shapes));
+        System.out.println(findMaxShapeIndex(shapes));
 
     }
 
@@ -42,6 +41,11 @@ public class Application {
     }
 
     public static int findMaxShapeIndex(Shape[] shapes) {
+        if (shapes == null || shapes.length == 0) {
+            return -1;
+        }
+
+        
         float max = shapes[0].getArea();
         int result = 0;
 
